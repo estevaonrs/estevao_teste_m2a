@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ html_language }}">
+
+<head>
+    {% include 'global/partials/head.html' %}
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+
+    {% block content %}{% endblock content %}
+
+    <script>
+        var loadPumpsUrl = "{% url 'gas_filling:load_pumps' %}";
+        var saveRefuelUrl = "{% url 'gas_filling:save_refuel' %}";
+        var downloadReportUrl = "{% url 'gas_filling:download_report' %}";
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script>$(document).ready(function() {
+        $('#liters').mask('000.000.000,00', {reverse: true});
+        $('#amount').mask('#.##0,00', {reverse: true});
+    });</script>
+
+
+</body>
+
+</html>

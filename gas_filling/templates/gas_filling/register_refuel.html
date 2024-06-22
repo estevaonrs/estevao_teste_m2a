@@ -1,0 +1,102 @@
+<!-- register_refuel.html -->
+
+{% extends 'global/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-custom">
+    <img class="logo" src="{% static 'images/logo.jpeg' %}" alt="Logo"> 
+    <h2 class="title">Abasteça seu veículo no Posto ABC</h2>
+    <button class="btn btn-primary btn-abastecer" data-toggle="modal" data-target="#refuelModal">Abastecer meu veículo</button>
+    <button class="btn btn-secondary ml-2" style="background-color: #f40404;" data-toggle="modal" data-target="#reportModal">Baixar relatório em PDF</button>
+</div>
+
+<div class="modal fade" id="refuelModal" tabindex="-1" role="dialog" aria-labelledby="refuelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="refuelModalLabel">Iniciar Abastecimento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="step1">
+                    <h5 style="font-size: 20px;">Selecione o Tanque</h5>
+                    <ul id="tankList" class="list-group">
+                        {% for tank in tanks %}
+                            <button type="button" class="list-group-item list-group-item-action tank-item" data-id="{{ tank.id }}">{{ tank.name }}</button>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="step2" style="display: none;">
+                    <h5 style="font-size: 20px;">Selecione a Bomba</h5>
+                    <ul id="pumpList" class="list-group"></ul>
+                </div>
+                <div id="step3" style="display: none;">
+                    <h5 style="font-size: 20px;">Informações do Abastecimento</h5>
+                    <form id="refuelForm">
+                        <input type="hidden" id="selectedPump" name="pump_id">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="liters" name="liters" placeholder="Litros" required>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">R$</span>
+                                </div>
+                                <input type="text" class="form-control" id="amount" name="amount" placeholder="Valor" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Abastecer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Abastecimento Efetuado com Sucesso!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Legal! O Frentista abasteceu seu veículo, volte sempre!
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportModalLabel">Gerar Relatório</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label for="startDate">Data Inicial:</label>
+                        <input type="date" class="form-control" id="startDate" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">Data Final:</label>
+                        <input type="date" class="form-control" id="endDate" name="endDate" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Baixar Relatório em PDF</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
